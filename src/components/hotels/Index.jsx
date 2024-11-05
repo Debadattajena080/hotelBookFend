@@ -10,11 +10,13 @@ const HotelHomePage = () => {
   useEffect(() => {
     const fetchhotel = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/hotels");
+        const response = await fetch(
+          "https://hotelbookbkend.onrender.com/api/hotels"
+        );
         const hotel = await response.json();
         setHotelList(hotel);
       } catch (error) {
-        toast.error(error)
+        toast.error(error);
       }
     };
     fetchhotel();
