@@ -13,7 +13,7 @@ const HotelDetails = () => {
   useEffect(() => {
     const fetchHotelDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/hotels/${id}`);
+        const response = await fetch(`https://hotelbookfend.onrender.com/api/hotels/${id}`);
         const data = await response.json();
         setHotel(data);
       } catch (error) {
@@ -41,7 +41,7 @@ const HotelDetails = () => {
                 className="flex justify-center items-center h-full"
               >
                 <img
-                  src={`http://localhost:8080/${image}`}
+                  src={`https://hotelbookfend.onrender.com/${image}`}
                   alt={`HotelImage ${index + 1}`}
                   className="object-cover w-full h-full "
                 />
