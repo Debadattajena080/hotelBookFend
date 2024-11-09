@@ -17,7 +17,7 @@ const HotelCard = ({ hotel, handleDetails }) => {
             {hotel.images.map((image, index) => (
               <div key={index} className="h-64 ">
                 <img
-                  src={`https://hotelbookfend.onrender.com/${image}`}
+                  src={`http://localhost:8080/${image}`}
                   alt={`HotelImage ${index + 1}`}
                   className="object-cover w-full h-full"
                 />
