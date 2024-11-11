@@ -1,4 +1,3 @@
-// HotelDetails.js
 import React, { useEffect, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import { useParams } from "react-router-dom";
@@ -58,17 +57,17 @@ const HotelDetails = () => {
         <p className="text-gray-500 text-2xl">{hotel?.address}</p>
       </div>
 
-      {/* Amenities */}
-
-      <div>
-        <h2 className="text-2xl font-semibold mb-2 mt-6">Amenities </h2>
-      </div>
-
       {/* About this Hotel */}
 
       <div>
         <h2 className="text-2xl font-semibold mb-2 mt-6">About this Hotel</h2>
         <p className="text-md mb-2">{hotel?.description}</p>
+      </div>
+
+      {/* Amenities */}
+
+      <div>
+        <h2 className="text-2xl font-semibold mb-2 mt-6">Amenities </h2>
       </div>
 
       {/* choose your room */}

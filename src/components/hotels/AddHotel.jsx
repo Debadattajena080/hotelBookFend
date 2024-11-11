@@ -11,7 +11,7 @@ const AddHotel = () => {
     city: "",
     phone: "",
     email: "",
-    price: "",
+    // price: "",
   });
   const [images, setImages] = useState([]);
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ const AddHotel = () => {
     formDataa.append("city", newHotel.city);
     formDataa.append("phone", newHotel.phone);
     formDataa.append("email", newHotel.email);
-    formDataa.append("price", newHotel.price);
+    // formDataa.append("price", newHotel.price);
 
     for (let i = 0; i < images.length; i++) {
       formDataa.append("uploadImages", images[i]);
@@ -144,46 +144,6 @@ const AddHotel = () => {
                 />
               </div>
 
-              {/* FEATURES TO BE IMPLEMENTED */}
-              {/* <div>
-                  <label
-                    htmlFor="roomtype"
-                    className="block mb-2 text-sm font-medium"
-                  >
-                    Room Type
-                  </label>
-                  <select
-                    id="roomtype"
-                    className=" border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5
-                     dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  >
-                    <option selected="">Select category</option>
-                    <option value="TV">TV/Monitors</option>
-                    <option value="PC">PC</option>
-                    <option value="GA">Gaming/Console</option>
-                    <option value="PH">Phones</option>
-                  </select>
-                </div> */}
-
-              <div>
-                <label
-                  htmlFor="price"
-                  className="block mb-2 text-sm font-medium"
-                >
-                  Price
-                </label>
-                <input
-                  type="number"
-                  name="price"
-                  id="price"
-                  className=" border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5
-                     dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="Rs 2999"
-                  required=""
-                  value={newHotel.price}
-                  onChange={handleInputChange}
-                />
-              </div>
               <div className="sm:col-span-2">
                 <label
                   htmlFor="address"
@@ -222,25 +182,6 @@ const AddHotel = () => {
                   onChange={handleInputChange}
                 />
               </div>
-
-              {/* FEATURS TO BE IMPLEMENTED */}
-              {/* <div className="w-full">
-                  <label
-                    htmlFor="state"
-                    className="block mb-2 text-sm font-medium"
-                  >
-                    State
-                  </label>
-                  <input
-                    type="text"
-                    name="state"
-                    id="state"
-                    className=" border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5
-                     dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="1234512345"
-                    required=""
-                  />
-                </div> */}
 
               <div className="sm:col-span-2">
                 <label
