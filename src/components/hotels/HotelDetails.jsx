@@ -3,12 +3,13 @@ import { Carousel } from "react-responsive-carousel";
 import { useParams } from "react-router-dom";
 import MyMapComponent from "../GoogleMap/GoogleMap";
 import RoomDetails from "../Rooms/RoomDetails";
-
+import { useNavigate } from "react-router-dom";
 import { FaInfo } from "react-icons/fa";
 import axios from "axios";
 
 const HotelDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [hotel, setHotel] = useState(null);
   const [rooms, setRooms] = useState();
 
@@ -39,7 +40,11 @@ const HotelDetails = () => {
       });
   }, [id]);
 
-  console.log("Rooms ", rooms)
+  console.log("Rooms ", rooms);
+
+  const addRoom = () => {
+    navigate(`/hotel/${id}/add-rooms`);
+  };
 
   return (
     <div className="mx-36 mt-4">
@@ -85,8 +90,11 @@ const HotelDetails = () => {
       {/* choose your room */}
 
       <div className="p-6 bg-white shadow-lg rounded-lg mt-4">
-        <h2 className="text-2xl font-bold mb-2 mt-4 border-b-2 pb-4">Choose your room</h2>
+        <h2 className="text-2xl font-bold mb-2 mt-4 border-b-2 pb-4">
+          Choose your room
+        </h2>
         <RoomDetails rooms={rooms} />
+        <button onClick={() => addRoom()}>Add Room</button>
       </div>
 
       {/* Hotel Policies  */}

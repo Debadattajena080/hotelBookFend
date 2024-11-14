@@ -10,7 +10,7 @@ const HomePage = () => {
 
       {/* row 1 */}
       <div>
-
+        <button>Add Hotel</button>
       </div>
     </div>
   );

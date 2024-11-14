@@ -13,7 +13,7 @@ const HotelHomePage = () => {
       setIsLoading(true);
       try {
         const response = await fetch(
-          "https://hotelbookbkend.onrender.com/api/hotels"
+          `${process.env.REACT_APP_BACKEND_URL}/api/hotels`
         );
         const hotel = await response.json();
         setHotelList(hotel);
@@ -30,6 +30,10 @@ const HotelHomePage = () => {
   console.log(hotelList);
   const handleDetails = (id) => {
     navigate(`/hotel/${id}`); // Navigate to the hotel details page
+  };
+
+  const addHotel = () => {
+    navigate("/add-hotel");
   };
 
   return (
@@ -52,6 +56,8 @@ const HotelHomePage = () => {
           ))}
         </div>
       )}
+
+      <button onClick={() => addHotel()}>Add Hotel</button>
     </>
   );
 };
