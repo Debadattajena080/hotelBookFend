@@ -30,7 +30,7 @@ const HotelDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/hotels/${id}/rooms`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/hotels/${id}/rooms`)
       .then((response) => {
         setRooms(response.data);
       })
