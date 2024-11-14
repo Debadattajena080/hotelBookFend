@@ -42,7 +42,7 @@ const AddHotel = () => {
     }
 
     axios
-      .post("http://localhost:8080/api/add-hotel", formDataa, {
+      .post(`${process.env.REACT_APP_BACKEND_URL}/api/add-hotel`, formDataa, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then(() => {

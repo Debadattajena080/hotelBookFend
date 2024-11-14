@@ -65,7 +65,7 @@ const AddRoom = () => {
     console.log("DATAS are", RoomData);
 
     axios
-      .post(`http://localhost:8080/api/hotels/${id}/add-rooms`, RoomData, {
+      .post(`${process.env.REACT_APP_BACKEND_URL}/api/hotels/${id}/add-rooms`, RoomData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then(() => {
