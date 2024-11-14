@@ -6,17 +6,22 @@ import { toast } from "react-toastify";
 const HotelHomePage = () => {
   const [hotelList, setHotelList] = useState([]);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchhotel = async () => {
+      setIsLoading(true);
       try {
         const response = await fetch(
           "https://hotelbookbkend.onrender.com/api/hotels"
         );
         const hotel = await response.json();
         setHotelList(hotel);
+        // setIsLoading(false)
       } catch (error) {
         toast.error(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchhotel();
@@ -29,16 +34,24 @@ const HotelHomePage = () => {
 
   return (
     <>
-      <div className="gap-4 justify-center flex flex-row flex-wrap items-center mx-36 mt-4 ">
-        {hotelList.map((hotel, id) => (
-          <div
-            key={id}
-            className="border shadow-lg rounded-lg p-6 flex gap-6 mb-6 w-full "
-          >
-            <HotelCard hotel={hotel} handleDetails={handleDetails} />
+      {isLoading ? (
+        <div className="flex justify-center items-center h-screen">
+          <div className="spinner-border text-primary" role="status">
+            <span className="sr-only">Loading...</span>
           </div>
-        ))}
-      </div>
+        </div>
+      ) : (
+        <div className="gap-4 justify-center flex flex-row flex-wrap items-center mx-36 mt-4 ">
+          {hotelList.map((hotel, id) => (
+            <div
+              key={id}
+              className="border shadow-lg rounded-lg p-6 flex gap-6 mb-6 w-full "
+            >
+              <HotelCard hotel={hotel} handleDetails={handleDetails} />
+            </div>
+          ))}
+        </div>
+      )}
     </>
   );
 };

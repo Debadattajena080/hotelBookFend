@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import { useParams } from "react-router-dom";
 import MyMapComponent from "../GoogleMap/GoogleMap";
+import RoomDetails from "../Rooms/RoomDetails";
 
 import { FaInfo } from "react-icons/fa";
+import axios from "axios";
 
 const HotelDetails = () => {
   const { id } = useParams();
   const [hotel, setHotel] = useState(null);
+  const [rooms, setRooms] = useState();
 
   useEffect(() => {
     const fetchHotelDetails = async () => {
@@ -24,6 +27,19 @@ const HotelDetails = () => {
 
     fetchHotelDetails();
   }, [id]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/api/hotels/${id}/rooms`)
+      .then((response) => {
+        setRooms(response.data);
+      })
+      .catch((err) => {
+        console.error("Error fetching rooms:", err);
+      });
+  }, [id]);
+
+  console.log("Rooms ", rooms)
 
   return (
     <div className="mx-36 mt-4">
@@ -59,26 +75,23 @@ const HotelDetails = () => {
 
       {/* About this Hotel */}
 
-      <div>
-        <h2 className="text-2xl font-semibold mb-2 mt-6">About this Hotel</h2>
-        <p className="text-md mb-2">{hotel?.description}</p>
-      </div>
-
-      {/* Amenities */}
-
-      <div>
-        <h2 className="text-2xl font-semibold mb-2 mt-6">Amenities </h2>
+      <div className="p-6 bg-white shadow-lg rounded-lg mt-4">
+        <h2 className="text-2xl font-bold mb-2 mt-6 pb-4 border-b-2">
+          About {hotel?.hotelname}
+        </h2>
+        <p className="text-md my-4">{hotel?.description}</p>
       </div>
 
       {/* choose your room */}
 
-      <div>
-        <h2 className="text-2xl font-semibold mb-2 mt-6">Choose your room</h2>
+      <div className="p-6 bg-white shadow-lg rounded-lg mt-4">
+        <h2 className="text-2xl font-bold mb-2 mt-4 border-b-2 pb-4">Choose your room</h2>
+        <RoomDetails rooms={rooms} />
       </div>
 
       {/* Hotel Policies  */}
 
-      <div className="p-6 bg-white shadow-lg rounded-lg">
+      <div className="p-6 bg-white shadow-lg rounded-lg  mt-4">
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">
           Hotel Policies
         </h2>
@@ -113,7 +126,7 @@ const HotelDetails = () => {
           </ul>
         </div>
       </div>
-      <div>
+      <div className="mt-6">
         <MyMapComponent address={hotel?.address} />
       </div>
 
