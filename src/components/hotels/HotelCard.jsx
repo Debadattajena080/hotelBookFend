@@ -34,7 +34,7 @@ const HotelCard = ({ hotel, handleDetails }) => {
         
         </div>
 
-        <p className="text-gray-600 mt-1 text-sm md:text-base md:mb-4">
+        <p className="text-gray-600 mt-1 text-md font-semibold md:text-base md:mb-4">
           {hotel.description.length > 100
             ? `${hotel.description.slice(0, 100)}...`
             : hotel.description}

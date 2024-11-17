@@ -1,6 +1,9 @@
 import React from "react";
 import { Carousel } from "react-responsive-carousel";
 import { IoCloseSharp } from "react-icons/io5";
+import { MdKingBed } from "react-icons/md";
+import { FaUserGroup } from "react-icons/fa6";
+import { GiWindow } from "react-icons/gi";
 
 const RoomModal = ({ room, onClose, amenitiesWithIcons }) => {
   console.log("Room in modal", room);
@@ -33,8 +36,22 @@ const RoomModal = ({ room, onClose, amenitiesWithIcons }) => {
           </Carousel>
         </div>
 
-        <p className="text-gray-700 mb-4">Capacity: {room.capacity}</p>
-        <p className="text-gray-700 mb-4">Price: ${room.price}</p>
+        <div className="text-gray-700 flex items-center justify-between border rounded-lg my-6 py-4 px-4">
+          <div className="flex items-center space-x-2">
+            <MdKingBed className="text-3xl" />
+            <span className="font-semibold text-md">
+              1 Double bed or 2 twin bed(s)
+            </span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <FaUserGroup className="text-2xl"/>
+            <span className="font-semibold">Max {room?.capacity} Guests</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <GiWindow className="text-2xl" />
+            <span className="font-semibold">Window with city view</span>
+          </div>
+        </div>
 
         <div className="font-bold text-2xl border-b-2 pb-3">About the Room</div>
 

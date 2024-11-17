@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import MyMapComponent from "../GoogleMap/GoogleMap";
 import RoomDetails from "../Rooms/RoomDetails";
 import { useNavigate } from "react-router-dom";
-import { FaInfo } from "react-icons/fa";
+import { IoIosCheckmarkCircle } from "react-icons/io";
 import axios from "axios";
 
 const HotelDetails = () => {
@@ -84,13 +84,13 @@ const HotelDetails = () => {
         <h2 className="text-2xl font-bold mb-2 mt-6 pb-4 border-b-2">
           About {hotel?.hotelname}
         </h2>
-        <p className="text-md my-4">{hotel?.description}</p>
+        <p className="text-md my-4 font-semibold">{hotel?.description}</p>
       </div>
 
       {/* choose your room */}
 
       <div className="p-6 bg-white shadow-lg rounded-lg mt-4">
-        <h2 className="text-2xl font-bold mb-2 mt-4 border-b-2 pb-4">
+        <h2 className="text-2xl font-bold mb-2 mt-4 border-b-2 pb-4 ">
           Choose your room
         </h2>
         <RoomDetails rooms={rooms} />
@@ -99,37 +99,50 @@ const HotelDetails = () => {
 
       {/* Hotel Policies  */}
 
-      <div className="p-6 bg-white shadow-lg rounded-lg  mt-4">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-          Hotel Policies
-        </h2>
+      <div className="p-6 bg-white shadow-lg rounded-lg  mt-6  ">
+        <div className="flex items-center pb-4 border-b-2 space-x-16 mb-4">
+          <h2 className="text-2xl font-bold text-gray-800">Hotel Policies</h2>
+          <div className="flex items-center text-gray-700 text-lg bg-blue-50 px-6 py-1 border rounded-full">
+            <span>
+              Check-In Time: <span className="font-bold"> 12.00 PM</span>
+            </span>
+            <span className="mx-4 text-gray-400">|</span>
+            <span>
+              Check-Out Time: <span className="font-bold">11.00 AM</span>
+            </span>
+          </div>
+        </div>
 
         {/* <!-- Check-in and Check-out times --> */}
-        <div className="flex items-center text-gray-700 text-lg font-medium my-4">
-          <span>Check-In</span>
-          <span className="mx-4 text-gray-400">|</span>
-          <span>Check-Out</span>
-        </div>
 
         {/* <!-- Policies List --> */}
         <div>
-          <ul className="space-y-3 text-gray-900 text-md">
-            <li className="flex items-start">
-              <FaInfo className="text-sm text-green-500 rounded-full mt-1 mr-2 " />
-              <p> Outside food is not allowed.</p>
+          <ul className="space-y-3 text-md">
+            <li className="flex items-center">
+              <IoIosCheckmarkCircle className="text-md text-gray-600 rounded-full mt-1 mr-2 " />
+              <p className="text-md font-semibold text-gray-700">
+                {" "}
+                Outside food is not allowed.
+              </p>
             </li>
-            <li className="flex items-start">
-              <FaInfo className="text-sm text-green-500 rounded-full mt-1 mr-2 " />
-              Couples are welcome.
+            <li className="flex items-center">
+              <IoIosCheckmarkCircle className="text-sm text-gray-600 rounded-full mt-1 mr-2 " />
+              <p className="text-md font-semibold text-gray-700">
+                Couples are welcome.
+              </p>
             </li>
-            <li className="flex items-start">
-              <FaInfo className="text-sm text-green-500 rounded-full mt-1 mr-2 " />
-              Guests can check in using any local or outstation ID proof (PAN
-              card not accepted).
+            <li className="flex items-center">
+              <IoIosCheckmarkCircle className="text-sm text-gray-600 rounded-full mt-1 mr-2 " />
+              <p className="text-md font-semibold text-gray-700">
+                Guests can check in using any local or outstation ID proof (PAN
+                card not accepted).
+              </p>
             </li>
-            <li className="flex items-start">
-              <FaInfo className="text-sm text-green-500 rounded-full mt-1 mr-2 " />
-              Only Indian Nationals allowed.
+            <li className="flex items-center">
+              <IoIosCheckmarkCircle className="text-sm text-gray-600 rounded-full mt-1 mr-2 " />
+              <p className="text-md font-semibold text-gray-700">
+                Only Indian Nationals allowed.
+              </p>
             </li>
           </ul>
         </div>
