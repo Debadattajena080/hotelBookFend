@@ -16,14 +16,11 @@ const AddRoom = () => {
 
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log("params", id);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
-
-  console.log("Form Data ", formData);
 
   const handleAmenitiesChange = (e) => {
     const { value, checked } = e.target;
@@ -38,7 +35,6 @@ const AddRoom = () => {
   const handleImageChange = (e) => {
     setImages([...e.target.files]);
   };
-  console.log("Images ", images);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,24 +52,24 @@ const AddRoom = () => {
       RoomData.append("amenities", amenity)
     );
 
-    console.log(RoomData.amenities);
-
     for (let i = 0; i < images.length; i++) {
       RoomData.append("uploadImages", images[i]);
     }
 
-    console.log("DATAS are", RoomData);
-
     axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/api/hotels/${id}/add-rooms`, RoomData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/hotels/${id}/add-rooms`,
+        RoomData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      )
       .then(() => {
         navigate("/");
         toast.success("Room added Successfully");
       })
       .catch((error) => {
-        console.error("Error adding room:", error);
+        toast.error(error);
       });
   };
 
@@ -202,7 +198,7 @@ const AddRoom = () => {
                     type="file"
                     name="uploadImages"
                     id="uploadImages"
-                    accept=".jpg,.jpeg,.png"
+                    accept=".jpg,.jpeg,.png,.webp"
                     multiple
                     className="border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5"
                     onChange={handleImageChange}

@@ -194,7 +194,7 @@ const AddHotel = () => {
                   type="file"
                   name="uploadImages"
                   id="uploadImages"
-                  accept=".jpg,.jpeg,.png"
+                  accept=".jpg,.jpeg,.png,.webp"
                   multiple
                   className="border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5"
                   onChange={handleImageChange} // Handle file input change

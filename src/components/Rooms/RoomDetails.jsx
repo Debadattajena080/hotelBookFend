@@ -3,6 +3,7 @@ import { Carousel } from "react-responsive-carousel";
 import AminityIcons from "../../utility/AminityIcons";
 import RoomModal from "./RoomModal";
 import { FaRupeeSign } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 // Helper function to get the icon component based on the amenity name
 const getAmenityIcon = (amenity) => {
@@ -16,6 +17,8 @@ const RoomDetails = ({ rooms }) => {
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [amenitiesWithIcons, setAmenitiesWithIcons] = useState([]);
 
+  const navigate = useNavigate();
+
   const handleViewMore = (room) => {
     const amenitiesWithIcons = room.amenities.map((amenity) => ({
       name: amenity,
@@ -24,6 +27,13 @@ const RoomDetails = ({ rooms }) => {
     setSelectedRoom(room);
     setAmenitiesWithIcons(amenitiesWithIcons);
     setShowModal(true);
+  };
+
+  const handleBookBtn = (room) => {
+    console.log("Navigation works fine");
+    navigate(`/hotel/${room.hotel}/room/${room._id}/book-room`, {
+      state:  selectedRoom , // This is where room data is passed
+    });
   };
 
   useEffect(() => {
@@ -46,7 +56,7 @@ const RoomDetails = ({ rooms }) => {
           className="room-details border-blue-200 border-b-4 pb-5"
         >
           <h2 className="font-bold text-gray-600 text-lg my-3">
-            {room.roomType} Room
+            {room?.roomType} Room
           </h2>
           <div className="flex">
             <div className="w-1/2 border rounded-lg overflow-hidden">
@@ -71,7 +81,7 @@ const RoomDetails = ({ rooms }) => {
               <div>
                 <p className="text-gray-600 mt-1 text-md font-semibold md:text-base md:mb-4">
                   {room?.roomDescriptions?.length > 100
-                    ? `${room.roomDescriptions.slice(0, 300)}   ...`
+                    ? `${room.roomDescriptions.slice(0, 300)} ...`
                     : room.roomDescriptions}
                 </p>
               </div>
@@ -112,7 +122,7 @@ const RoomDetails = ({ rooms }) => {
                 <h2 className="text-3xl flex items-center">
                   {" "}
                   <FaRupeeSign className="mr-1" />
-                  {room.price}
+                  {room?.price}
                 </h2>
                 <span className="flex items-center mt-2">
                   +<FaRupeeSign className="mx-1 text-sm" />{" "}
@@ -129,8 +139,9 @@ const RoomDetails = ({ rooms }) => {
               <button
                 className="border-2 rounded-lg py-4 px-6 text-md border-orange-300 font-bold text-orange-600
                hover:bg-orange-600 hover:text-white "
+                onClick={() => handleBookBtn(room)}
               >
-                BOOK NOW
+                SELECT ROOM
               </button>
             </div>
           </div>

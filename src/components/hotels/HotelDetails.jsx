@@ -150,11 +150,6 @@ const HotelDetails = () => {
       <div className="mt-6">
         <MyMapComponent address={hotel?.address} />
       </div>
-
-      <p className="text-gray-500">Price: ${hotel?.price}</p>
-      <p className="text-gray-500">
-        Contact: {hotel?.email} | {hotel?.phone}
-      </p>
     </div>
   );
 };
