@@ -9,8 +9,8 @@ const HotelHomePage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchhotel = async () => {
-      setIsLoading(true);
       try {
         const response = await fetch(
           `${process.env.REACT_APP_BACKEND_URL}/api/hotels`

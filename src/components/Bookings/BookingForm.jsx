@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import {
   FaCalendarAlt,
   FaUserAlt,
@@ -6,14 +7,20 @@ import {
   FaPhoneAlt,
 } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-import { useLocation } from "react-router-dom";
+import axios from "axios";
 
-function BookingForm() {
-  const { state } = useLocation(); // Get the state passed via navigate
-  console.log("State from location:", state);
+const BookingForm = () => {
+  const { id } = useParams();
+  const { roomId } = useParams();
 
-  const [formData, setFormData] = useState({
+  const navigate = useNavigate();
+
+  console.log(id, roomId);
+
+  const [bookingFormData, setBookingFormData] = useState({
     checkIn: "",
     checkOut: "",
     guests: 1,
@@ -24,6 +31,16 @@ function BookingForm() {
     contactPhone: "",
   });
 
+  const [today, setToday] = useState("");
+
+  useEffect(() => {
+    const now = new Date();
+    const formattedDate = now.toISOString().split("T")[0]; // Format date as YYYY-MM-DD
+    setToday(formattedDate);
+  }, []);
+
+  console.log("selected date", today);
+
   const [selectedRoom, setSelectedRoom] = useState({
     roomType: "Double",
     price: 4500,
@@ -32,12 +49,26 @@ function BookingForm() {
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setBookingFormData({ ...bookingFormData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  console.log("Form data", bookingFormData);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData); // Handle form submission here
+
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/hotels/${id}/room/${roomId}/book-room`,
+        bookingFormData
+      );
+      console.log("Booking Successful:", response.data);
+      toast.success("Booking successful");
+      navigate("/");
+    } catch (error) {
+      console.error("Booking Failed:", error);
+      toast.error("Failed to book room. Please try again.");
+    }
   };
 
   return (
@@ -99,9 +130,12 @@ function BookingForm() {
                   type="date"
                   id="checkIn"
                   name="checkIn"
-                  value={formData.checkIn}
+                  value={bookingFormData.checkIn}
                   onChange={handleChange}
-                  className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  min={today}
+                  max={bookingFormData.checkOut || ""}
+                  className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none
+                   focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
               <div>
@@ -116,9 +150,11 @@ function BookingForm() {
                   type="date"
                   id="checkOut"
                   name="checkOut"
-                  value={formData.checkOut}
+                  value={bookingFormData.checkOut}
                   onChange={handleChange}
-                  className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  min={bookingFormData.checkIn || today}
+                  className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500
+                   focus:border-blue-500"
                 />
               </div>
             </div>
@@ -138,7 +174,7 @@ function BookingForm() {
                   id="rooms"
                   name="rooms"
                   min="1"
-                  value={formData.rooms}
+                  value={bookingFormData.rooms}
                   onChange={handleChange}
                   className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 />
@@ -156,7 +192,7 @@ function BookingForm() {
                   id="guests"
                   name="guests"
                   min="1"
-                  value={formData.guests}
+                  value={bookingFormData.guests}
                   onChange={handleChange}
                   className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 />
@@ -180,7 +216,7 @@ function BookingForm() {
                     type="text"
                     id="firstName"
                     name="firstName"
-                    value={formData.firstName}
+                    value={bookingFormData.firstName}
                     onChange={handleChange}
                     className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Enter First Name"
@@ -197,7 +233,7 @@ function BookingForm() {
                     type="text"
                     id="lastName"
                     name="lastName"
-                    value={formData.lastName}
+                    value={bookingFormData.lastName}
                     onChange={handleChange}
                     className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Enter Last Name"
@@ -217,7 +253,7 @@ function BookingForm() {
                     type="email"
                     id="contactEmail"
                     name="contactEmail"
-                    value={formData.contactEmail}
+                    value={bookingFormData.contactEmail}
                     onChange={handleChange}
                     className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Enter your email address"
@@ -235,7 +271,7 @@ function BookingForm() {
                     type="tel"
                     id="contactPhone"
                     name="contactPhone"
-                    value={formData.contactPhone}
+                    value={bookingFormData.contactPhone}
                     onChange={handleChange}
                     className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Enter your phone number"
@@ -257,6 +293,6 @@ function BookingForm() {
       </div>
     </div>
   );
-}
+};
 
 export default BookingForm;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Carousel } from "react-responsive-carousel";
 import { useParams } from "react-router-dom";
 import MyMapComponent from "../GoogleMap/GoogleMap";
@@ -6,12 +6,17 @@ import RoomDetails from "../Rooms/RoomDetails";
 import { useNavigate } from "react-router-dom";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import axios from "axios";
+import RoomContext from "../../context/RoomDetailsContext";
 
 const HotelDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [hotel, setHotel] = useState(null);
   const [rooms, setRooms] = useState();
+
+  const { allRoom } = useContext(RoomContext);
+
+  console.log("All room", allRoom);
 
   useEffect(() => {
     const fetchHotelDetails = async () => {
