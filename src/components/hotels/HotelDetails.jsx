@@ -5,18 +5,18 @@ import MyMapComponent from "../GoogleMap/GoogleMap";
 import RoomDetails from "../Rooms/RoomDetails";
 import { useNavigate } from "react-router-dom";
 import { IoIosCheckmarkCircle } from "react-icons/io";
-import axios from "axios";
+// import axios from "axios";
 import RoomContext from "../../context/RoomDetailsContext";
 
 const HotelDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [hotel, setHotel] = useState(null);
-  const [rooms, setRooms] = useState();
+  // const [rooms, setRooms] = useState();
 
-  const { allRoom } = useContext(RoomContext);
+  const { roomData, fetchRoomDetailsById } = useContext(RoomContext);
 
-  console.log("All room", allRoom);
+  // console.log("All room", roomData);
 
   useEffect(() => {
     const fetchHotelDetails = async () => {
@@ -35,17 +35,12 @@ const HotelDetails = () => {
   }, [id]);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/hotels/${id}/rooms`)
-      .then((response) => {
-        setRooms(response.data);
-      })
-      .catch((err) => {
-        console.error("Error fetching rooms:", err);
-      });
+    if (id) {
+      fetchRoomDetailsById(id);
+    }
   }, [id]);
 
-  console.log("Rooms ", rooms);
+  console.log("Rooms ", roomData);
 
   const addRoom = () => {
     navigate(`/hotel/${id}/add-rooms`);
@@ -58,7 +53,7 @@ const HotelDetails = () => {
           <Carousel
             showArrows={true}
             showIndicators={true}
-            showThumbs={true}
+            showThumbs={false}
             centerMode={true}
             centerSlidePercentage={40}
           >
@@ -78,14 +73,14 @@ const HotelDetails = () => {
         </div>
       </div>
 
-      <div>
+      <div className="mt-8">
         <h1 className="text-4xl font-semibold mb-2 mt-6">{hotel?.hotelname}</h1>
         <p className="text-gray-500 text-2xl">{hotel?.address}</p>
       </div>
 
       {/* About this Hotel */}
 
-      <div className="p-6 bg-white shadow-lg rounded-lg mt-4">
+      <div className="p-6 bg-white shadow-lg rounded-lg mt-8">
         <h2 className="text-2xl font-bold mb-2 mt-6 pb-4 border-b-2">
           About {hotel?.hotelname}
         </h2>
@@ -94,11 +89,11 @@ const HotelDetails = () => {
 
       {/* choose your room */}
 
-      <div className="p-6 bg-white shadow-lg rounded-lg mt-4">
+      <div className="p-6 bg-white shadow-lg rounded-lg mt-8">
         <h2 className="text-2xl font-bold mb-2 mt-4 border-b-2 pb-4 ">
           Choose your room
         </h2>
-        <RoomDetails rooms={rooms} />
+        <RoomDetails rooms={roomData} />
         <button onClick={() => addRoom()}>Add Room</button>
       </div>
 

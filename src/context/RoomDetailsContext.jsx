@@ -1,14 +1,12 @@
 import axios from "axios";
-import { useState, useEffect, createContext } from "react";
-import { useParams } from "react-router-dom";
+import { useState, createContext } from "react";
 
 const RoomContext = createContext();
 
 export const RoomProvider = ({ children }) => {
   const [roomData, setRoomData] = useState();
-  const { id } = useParams();
 
-  useEffect(() => {
+  const fetchRoomDetailsById = (id) => {
     axios
       .get(`${process.env.REACT_APP_BACKEND_URL}/api/hotels/${id}/rooms`)
       .then((response) => {
@@ -17,10 +15,12 @@ export const RoomProvider = ({ children }) => {
       .catch((err) => {
         console.error("Error fetching rooms:", err);
       });
-  }, []);
+  };
 
   return (
-    <RoomContext.Provider value={{ roomData }}>{children}</RoomContext.Provider>
+    <RoomContext.Provider value={{ roomData, fetchRoomDetailsById }}>
+      {children}
+    </RoomContext.Provider>
   );
 };
 

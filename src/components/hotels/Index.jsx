@@ -32,9 +32,7 @@ const HotelHomePage = () => {
     navigate(`/hotel/${id}`); // Navigate to the hotel details page
   };
 
-  const addHotel = () => {
-    navigate("/add-hotel");
-  };
+  
 
   return (
     <>
@@ -45,11 +43,11 @@ const HotelHomePage = () => {
           </div>
         </div>
       ) : (
-        <div className="gap-4 justify-center flex flex-row flex-wrap items-center mx-36 mt-4 ">
+        <div className=" gap-4 justify-center flex flex-row flex-wrap items-center mx-36 mt-4 ">
           {hotelList.map((hotel, id) => (
             <div
               key={id}
-              className="border shadow-lg rounded-lg p-6 flex gap-6 mb-6 w-full "
+              className="border shadow-lg rounded-lg p-6 flex gap-6 mb-6 w-full bg-white"
             >
               <HotelCard hotel={hotel} handleDetails={handleDetails} />
             </div>
@@ -57,7 +55,7 @@ const HotelHomePage = () => {
         </div>
       )}
 
-      <button onClick={() => addHotel()}>Add Hotel</button>
+    
     </>
   );
 };

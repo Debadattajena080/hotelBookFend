@@ -7,7 +7,7 @@ const HotelCard = ({ hotel, handleDetails }) => {
   return (
     <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6">
       {/* Carousel Column */}
-      <div className="md:w-2/4 w-full border rounded-lg overflow-hidden">
+      <div className="md:w-1/2 w-full border rounded-lg overflow-hidden">
         <Carousel showArrows={true} showIndicators={true} showThumbs={false}>
           {hotel.images.map((image, index) => (
             <div key={index} className="h-64">
