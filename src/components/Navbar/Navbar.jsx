@@ -19,6 +19,10 @@ const Navbar = () => {
     navigate("/add-hotel");
   };
 
+  const allBookings = () => {
+    navigate("/all-bookings");
+  };
+
   return (
     <div className="md:w-5/6 mx-auto">
       {/* Navbar Section */}
@@ -40,13 +44,21 @@ const Navbar = () => {
             </div>
 
             <nav className="hidden md:flex space-x-6">
-              <a href="/" className="text-gray-600 hover:text-gray-900">
-                Home
-              </a>
+              <button
+                onClick={() => allBookings()}
+                className="text-gray-600 hover:text-gray-900"
+              >
+                Bookings
+              </button>
               <a href="/hotels" className="text-gray-600 hover:text-gray-900">
                 Hotels
               </a>
-              <button className="text-gray-600 hover:text-gray-900" onClick={() => addHotel()}>Add Hotel</button>
+              <button
+                className="text-gray-600 hover:text-gray-900"
+                onClick={() => addHotel()}
+              >
+                Add Hotel
+              </button>
             </nav>
 
             <div className="relative py-2 px-3 border rounded-lg border-gray-600">
@@ -63,7 +75,7 @@ const Navbar = () => {
               {isDropdownOpen && (
                 <div
                   id="dropdown-menu"
-                  className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg"
+                  className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10"
                 >
                   <Link
                     to="/profile"

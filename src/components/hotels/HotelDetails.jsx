@@ -7,17 +7,13 @@ import { useNavigate } from "react-router-dom";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 // import axios from "axios";
 import RoomContext from "../../context/RoomDetailsContext";
+import { toast } from "react-toastify";
 
 const HotelDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [hotel, setHotel] = useState(null);
-  // const [rooms, setRooms] = useState();
-
   const { roomData, fetchRoomDetailsById } = useContext(RoomContext);
-
-  // console.log("All room", roomData);
-
   useEffect(() => {
     const fetchHotelDetails = async () => {
       try {
@@ -27,7 +23,7 @@ const HotelDetails = () => {
         const data = await response.json();
         setHotel(data);
       } catch (error) {
-        console.error("Error fetching hotel details:", error);
+        toast.error(error);
       }
     };
 
@@ -39,8 +35,6 @@ const HotelDetails = () => {
       fetchRoomDetailsById(id);
     }
   }, [id]);
-
-  console.log("Rooms ", roomData);
 
   const addRoom = () => {
     navigate(`/hotel/${id}/add-rooms`);

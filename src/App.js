@@ -5,7 +5,8 @@ import HotelHomePage from "./components/hotels/Index";
 import HotelDetails from "./components/hotels/HotelDetails";
 import RoomDetails from "./components/Rooms/RoomDetails";
 import BookingForm from "./components/Bookings/BookingForm";
-import Navbar from './components/Navbar/Navbar'
+import Navbar from "./components/Navbar/Navbar";
+import SearchResults from "./components/Search/SearchResults";
 
 import AddRoom from "./components/Rooms/AddRoom";
 
@@ -29,6 +30,7 @@ function App() {
             path="/hotel/:id/room/:roomId/book-room"
             element={<BookingForm />}
           />
+          <Route path="/search_results" element={<SearchResults />} />
 
           <Route path="/all-bookings" element={<BookingIndex />} />
         </Routes>

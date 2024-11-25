@@ -1,24 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {
-  FaCalendarAlt,
-  FaUserAlt,
-  FaRupeeSign,
-  FaPhoneAlt,
-} from "react-icons/fa";
+import { FaCalendarAlt, FaUserAlt, FaPhoneAlt } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 const BookingForm = () => {
   const { id } = useParams();
   const { roomId } = useParams();
+  const [searchParams] = useSearchParams(); // This will get the query parameters from the URL
 
   const navigate = useNavigate();
-
-  console.log(id, roomId);
 
   const [bookingFormData, setBookingFormData] = useState({
     checkIn: "",
@@ -37,36 +30,37 @@ const BookingForm = () => {
     const now = new Date();
     const formattedDate = now.toISOString().split("T")[0]; // Format date as YYYY-MM-DD
     setToday(formattedDate);
-  }, []);
 
-  console.log("selected date", today);
+    // Prefill form fields from the URL query parameters
+    const checkIn = searchParams.get("checkIn");
+    const checkOut = searchParams.get("checkOut");
+    const rooms = searchParams.get("rooms");
+    const guests = searchParams.get("guests");
 
-  const [selectedRoom, setSelectedRoom] = useState({
-    roomType: "Double",
-    price: 4500,
-    roomDescription: "A spacious double room with modern amenities.",
-    amenities: ["WiFi", "Air Conditioning", "Mini Bar", "TV"],
-  });
+    setBookingFormData((prevData) => ({
+      ...prevData,
+      checkIn: checkIn || "", // If checkIn is present in URL, use it, else set empty
+      checkOut: checkOut || "",
+      rooms: rooms || 1,
+      guests: guests || 1,
+    }));
+  }, [searchParams]);
 
   const handleChange = (e) => {
     setBookingFormData({ ...bookingFormData, [e.target.name]: e.target.value });
   };
 
-  console.log("Form data", bookingFormData);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
+      await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/hotels/${id}/room/${roomId}/book-room`,
         bookingFormData
       );
-      console.log("Booking Successful:", response.data);
       toast.success("Booking successful");
-      navigate("/");
+      navigate("/"); // Navigate after successful booking
     } catch (error) {
-      console.error("Booking Failed:", error);
       toast.error("Failed to book room. Please try again.");
     }
   };
@@ -74,42 +68,6 @@ const BookingForm = () => {
   return (
     <div className="flex justify-center items-center mx-auto">
       <div className="p-6 w-1/2 space-y-8">
-        {/* Room Details Section */}
-        <div className="bg-white p-6 rounded-lg shadow-lg space-y-4">
-          <h2 className="text-2xl font-bold text-gray-600 pb-4 border-b-2">
-            PROPERTY INFO
-          </h2>
-          <div className="flex justify-between items-center text-lg">
-            <span className="font-semibold text-gray-700">Room Type:</span>
-            <span className="text-purple-700">{selectedRoom.roomType}</span>
-          </div>
-          <div className="flex justify-between items-center text-lg">
-            <span className="font-semibold text-gray-700">
-              Price per Night:
-            </span>
-            <span className="text-orange-600">
-              <FaRupeeSign className="inline-block" /> {selectedRoom.price}
-            </span>
-          </div>
-          <div className="mt-4">
-            <h3 className="text-lg font-semibold text-gray-700">
-              Room Description:
-            </h3>
-            <p className="text-gray-600">{selectedRoom.roomDescription}</p>
-          </div>
-          <div className="mt-4">
-            <h3 className="text-lg font-semibold text-gray-700">Amenities:</h3>
-            <ul className="space-y-2 text-gray-600">
-              {selectedRoom.amenities.map((amenity, index) => (
-                <li key={index} className="flex items-center space-x-2">
-                  <span>✔️</span>
-                  <span>{amenity}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
         {/* Booking Form Section */}
         <div className="bg-white p-8 rounded-lg shadow-lg">
           <h2 className="text-2xl font-bold text-gray-600 pb-4 border-b-2">
@@ -283,8 +241,8 @@ const BookingForm = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className=" w-full border-2 rounded-lg py-2 px-6 text-lg border-orange-300 font-bold text-orange-600
-               hover:bg-orange-600 hover:text-white "
+              className=" w-full border-2 rounded-lg py-2 px-6 text-lg border-gray-300 font-bold text-gray-600
+               hover:bg-gray-600 hover:text-white "
             >
               Book Now
             </button>

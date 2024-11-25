@@ -29,7 +29,7 @@ const HotelHomePage = () => {
 
   console.log(hotelList);
   const handleDetails = (id) => {
-    navigate(`/hotel/${id}`); // Navigate to the hotel details page
+    navigate(`/hotel/${id}`); 
   };
 
   

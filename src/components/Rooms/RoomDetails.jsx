@@ -3,7 +3,7 @@ import { Carousel } from "react-responsive-carousel";
 import AminityIcons from "../../utility/AminityIcons";
 import RoomModal from "./RoomModal";
 import { FaRupeeSign } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 // Helper function to get the icon component based on the amenity name
 const getAmenityIcon = (amenity) => {
@@ -18,6 +18,9 @@ const RoomDetails = ({ rooms }) => {
   const [amenitiesWithIcons, setAmenitiesWithIcons] = useState([]);
 
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  console.log("srchPrms", searchParams);
 
   const handleViewMore = (room) => {
     const amenitiesWithIcons = room.amenities.map((amenity) => ({
@@ -30,10 +33,10 @@ const RoomDetails = ({ rooms }) => {
   };
 
   const handleBookBtn = (room) => {
-    console.log("Navigation works fine");
-    navigate(`/hotel/${room.hotel}/room/${room._id}/book-room`, {
-      state:  selectedRoom , // This is where room data is passed
-    });
+    const currentQueryParams = searchParams.toString();
+    navigate(
+      `/hotel/${room.hotel}/room/${room._id}/book-room?${currentQueryParams}`
+    );
   };
 
   useEffect(() => {
