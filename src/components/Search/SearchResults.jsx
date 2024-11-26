@@ -8,7 +8,6 @@ const SearchResults = () => {
   const [searchParams] = useSearchParams();
   const [hotels, setHotels] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
@@ -48,10 +47,6 @@ const SearchResults = () => {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>{error}</div>;
-  }
-
   const handleDetails = (id) => {
     const currentQueryParams = searchParams.toString();
     const newUrl = `/hotel/${id}?${currentQueryParams}`;
@@ -60,7 +55,6 @@ const SearchResults = () => {
 
   return (
     <div className="search-results">
-      <h1>Search Results</h1>
       {hotels.length > 0 ? (
         <div>
           <div className=" gap-4 justify-center flex flex-row flex-wrap items-center mx-36 mt-4 ">

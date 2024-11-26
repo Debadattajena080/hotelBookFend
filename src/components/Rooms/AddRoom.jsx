@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 const AddRoom = () => {
   const [formData, setFormData] = useState({
     roomType: "Classic",
-    totalrooms: "",
+    totalRoom: "",
     price: "",
     capacity: "",
     roomDescriptions: "",
@@ -43,7 +43,8 @@ const AddRoom = () => {
     const RoomData = new FormData();
     RoomData.append("roomType", formData.roomType);
     console.log("roomtype", formData.roomType);
-    RoomData.append("totalrooms", formData.totalrooms);
+    RoomData.append("totalRoom", formData.totalRoom);
+
     RoomData.append("price", formData.price);
     RoomData.append("capacity", formData.capacity);
     RoomData.append("roomDescriptions", formData.roomDescriptions);
@@ -72,6 +73,7 @@ const AddRoom = () => {
         toast.error(error);
       });
   };
+  // console.log("formdata", FormData);
 
   return (
     <>
@@ -110,21 +112,21 @@ const AddRoom = () => {
                 </div>
                 <div className="w-full">
                   <label
-                    htmlFor="totalRooms"
+                    htmlFor="totalRoom"
                     className="block mb-2 text-sm font-medium"
                   >
                     Total Rooms
                   </label>
                   <input
                     type="number"
-                    name="totalrooms"
-                    id="totalrooms"
+                    name="totalRoom"
+                    id="totalRoom"
                     className=" border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 
                     block w-full p-2.5"
                     placeholder="Total number of rooms"
                     required
                     onChange={handleChange}
-                    value={formData.totalrooms}
+                    value={formData.totalRoom}
                   />
                 </div>
 

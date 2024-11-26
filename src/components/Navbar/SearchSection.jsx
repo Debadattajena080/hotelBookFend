@@ -167,7 +167,7 @@ const SearchSection = () => {
             </label>
             <div
               onClick={() => setIsRoomGuestOpen(!isRoomGuestOpen)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none cursor-pointer flex items-center justify-between"
+              className="w-full px-4 py-2 border border-gray-300 bg-white rounded-md focus:outline-none cursor-pointer flex items-center justify-between"
             >
               <span>
                 {rooms.length} Room{rooms.length > 1 ? "s" : ""},{" "}

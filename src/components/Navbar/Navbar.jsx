@@ -51,7 +51,7 @@ const Navbar = () => {
                 Bookings
               </button>
               <a href="/hotels" className="text-gray-600 hover:text-gray-900">
-                Hotels
+                My Properties
               </a>
               <button
                 className="text-gray-600 hover:text-gray-900"
