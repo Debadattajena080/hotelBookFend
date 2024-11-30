@@ -11,7 +11,6 @@ const AddHotel = () => {
     city: "",
     phone: "",
     email: "",
-    // price: "",
   });
   const [images, setImages] = useState([]);
   const navigate = useNavigate();

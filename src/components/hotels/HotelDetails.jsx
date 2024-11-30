@@ -8,12 +8,14 @@ import { IoIosCheckmarkCircle } from "react-icons/io";
 // import axios from "axios";
 import RoomContext from "../../context/RoomDetailsContext";
 import { toast } from "react-toastify";
+import { AuthContext } from "../../context/AuthContext";
 
 const HotelDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [hotel, setHotel] = useState(null);
   const { roomData, fetchRoomDetailsById } = useContext(RoomContext);
+  const { userRole } = useContext(AuthContext);
   useEffect(() => {
     const fetchHotelDetails = async () => {
       try {
@@ -88,7 +90,9 @@ const HotelDetails = () => {
           Choose your room
         </h2>
         <RoomDetails rooms={roomData} />
-        <button onClick={() => addRoom()}>Add Room</button>
+        {userRole === "admin" && (
+          <button onClick={() => addRoom()}>Add Room</button>
+        )}
       </div>
 
       {/* Hotel Policies  */}

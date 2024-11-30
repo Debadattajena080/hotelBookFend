@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaCalendarAlt, FaUserAlt, FaPhoneAlt } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "../../context/AuthContext";
 
 const BookingForm = () => {
   const { id } = useParams();
   const { roomId } = useParams();
   const [searchParams] = useSearchParams(); // This will get the query parameters from the URL
+  const { userEmail,phone } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -20,9 +22,11 @@ const BookingForm = () => {
     rooms: 1,
     firstName: "",
     lastName: "",
-    contactEmail: "",
-    contactPhone: "",
+    contactEmail: userEmail,
+    contactPhone: phone,
   });
+
+  console.log("Phone", phone);
 
   const [today, setToday] = useState("");
 
