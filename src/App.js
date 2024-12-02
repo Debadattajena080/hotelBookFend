@@ -18,12 +18,15 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 
-import { AuthContext } from "./context/AuthContext";
-import { useContext } from "react";
 import ProtectedRoute from "./utility/ProtectedRoute";
+import Myproperties from "./components/hotels/Myproperties";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
 
 function App() {
+
   const { userRole } = useContext(AuthContext);
+
   return (
     <div className="App bg-gray-100 min-h-[100vh] ">
       <BrowserRouter>
@@ -31,12 +34,26 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={<HotelHomePage />} />
           <Route
-            path="/add-hotel"
+            path="/"
+            element={
+              userRole === "admin" ? <Myproperties /> : <HotelHomePage />
+            }
+          />
+          <Route
+            path="/user/:userId/add-hotel"
             element={
               <ProtectedRoute requiredRole="admin">
                 <AddHotel />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/user/:userId/myproperties"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <Myproperties />
               </ProtectedRoute>
             }
           />

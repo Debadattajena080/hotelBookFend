@@ -35,8 +35,8 @@ const MyMapComponent = ({ address }) => {
   return (
     <LoadScript googleMapsApiKey={apiKey}>
       <GoogleMap
-        mapContainerStyle={{ width: "100%", height: "400px" }}
-        zoom={14}
+        mapContainerStyle={{ width: "50%", height: "400px" }}
+        zoom={15}
         center={coordinates || { lat: 37.783333, lng: -122.416667 }}
       >
         {coordinates && <Marker position={coordinates} />}

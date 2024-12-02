@@ -24,7 +24,7 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/api/signup`, signupData)
+      .post(`${process.env.REACT_APP_BACKEND_URL}/api/user/signup`, signupData)
       .then((response) => {
         toast.success(response.data.message);
         const token = response.data.token;

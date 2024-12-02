@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { AuthContext } from "../../context/AuthContext";
 
 const AddHotel = () => {
   const [newHotel, setNewHotel] = useState({
@@ -14,6 +15,10 @@ const AddHotel = () => {
   });
   const [images, setImages] = useState([]);
   const navigate = useNavigate();
+
+  const {userId} = useContext(AuthContext)
+
+  console.log("UserId", userId);
 
   const handleInputChange = (e) => {
     setNewHotel({ ...newHotel, [e.target.name]: e.target.value });
@@ -41,7 +46,7 @@ const AddHotel = () => {
     }
 
     axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/api/add-hotel`, formDataa, {
+      .post(`${process.env.REACT_APP_BACKEND_URL}/api/user/${userId}/add-hotel`, formDataa, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then(() => {
@@ -54,14 +59,14 @@ const AddHotel = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-gray-100">
       <form
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="shadow-md rounded px-8 pt-6 pb-8 mb-4"
         method="POST"
         onSubmit={handleFormSubmit}
         encType="multipart/form-data"
       >
-        <section className="bg-white">
+        <section>
           <div className="py-8 px-2 mx-auto max-w-2xl lg:py-12">
             <h2 className="mb-4 text-xl font-bold">Add a new Hotel</h2>
 

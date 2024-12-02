@@ -145,7 +145,10 @@ const HotelDetails = () => {
           </ul>
         </div>
       </div>
-      <div className="mt-6">
+      <div className="mt-6 flex justify-between p-6 bg-white shadow-lg rounded-lg mb-4 ">
+        <div>
+        <h2 className="text-2xl font-bold text-gray-800 pb-4 border-b-2 space-x-16">Contact details</h2>
+        </div>
         <MyMapComponent address={hotel?.address} />
       </div>
     </div>

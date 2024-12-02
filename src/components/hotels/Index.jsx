@@ -13,7 +13,7 @@ const HotelHomePage = () => {
     const fetchhotel = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/api/hotels`
+          `${process.env.REACT_APP_BACKEND_URL}/api/allhotels`
         );
         const hotel = await response.json();
         setHotelList(hotel);

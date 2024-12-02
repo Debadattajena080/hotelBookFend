@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [userEmail, setUserEmail] = useState(null); // Store the user's data
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Store authentication state
   const [phone, setPhone] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   const [jwtToken, setJwtToken] = useState(localStorage.getItem("token"));
 
@@ -18,6 +19,7 @@ export const AuthProvider = ({ children }) => {
         setUserEmail(decoded.email); // Replace with your token's structure
         setUserRole(decoded.role); // Replace with your token's structure
         setPhone(decoded.phone);
+        setUserId(decoded.id);
         setIsAuthenticated(true);
       } catch (error) {
         console.error("Invalid token:", error);
@@ -41,6 +43,7 @@ export const AuthProvider = ({ children }) => {
         userRole,
         isAuthenticated,
         phone,
+        userId,
         setJwtToken,
         setUserEmail,
         setUserRole,

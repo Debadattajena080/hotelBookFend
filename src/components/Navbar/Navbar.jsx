@@ -15,13 +15,14 @@ const Navbar = () => {
   const {
     userEmail,
     userRole,
+    userId,
     isAuthenticated,
     setIsAuthenticated,
     setUserRole,
     setUserEmail,
   } = useContext(AuthContext);
 
-  console.log(userEmail, userRole, isAuthenticated);
+  console.log(userEmail, userRole, isAuthenticated, userId);
 
   // const [userLogged, setUserLogged] = useState(false);
   const navigate = useNavigate();
@@ -35,11 +36,15 @@ const Navbar = () => {
   };
 
   const addHotel = () => {
-    navigate("/add-hotel");
+    navigate(`/user/${userId}/add-hotel`);
   };
 
   const allBookings = () => {
     navigate("/all-bookings");
+  };
+
+  const allHotels = () => {
+    navigate(`/user/${userId}/myproperties`);
   };
 
   const logoutBtn = () => {
@@ -77,9 +82,12 @@ const Navbar = () => {
                 >
                   Bookings
                 </button>
-                <a href="/hotels" className="text-gray-600 hover:text-gray-900">
+                <button
+                  className="text-gray-600 hover:text-gray-900"
+                  onClick={() => allHotels()}
+                >
                   My Properties
-                </a>
+                </button>
 
                 <button
                   className="text-gray-600 hover:text-gray-900"
@@ -144,7 +152,7 @@ const Navbar = () => {
       </div>
 
       {/* Search Section */}
-      <SearchSection />
+      {userRole === "user" && <SearchSection />}
     </div>
   );
 };

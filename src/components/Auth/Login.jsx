@@ -23,7 +23,7 @@ const Login = () => {
 
     console.log(loginData);
     axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/api/login`, loginData)
+      .post(`${process.env.REACT_APP_BACKEND_URL}/api/user/login`, loginData)
       .then((response) => {
         const token = response.data.token;
 
