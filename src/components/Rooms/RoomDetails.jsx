@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { Carousel } from "react-responsive-carousel";
 import AminityIcons from "../../utility/AminityIcons";
-import RoomModal from "./RoomModal";
+// import RoomModal from "./RoomModal";
 import { FaRupeeSign } from "react-icons/fa6";
 import { useNavigate, useSearchParams } from "react-router-dom";
+
+const LazyRoomModal = lazy(() => import("./RoomModal"));
 
 // Helper function to get the icon component based on the amenity name
 const getAmenityIcon = (amenity) => {
@@ -151,12 +153,14 @@ const RoomDetails = ({ rooms }) => {
         </div>
       ))}
       {showModal && (
-        <RoomModal
-          room={selectedRoom}
-          amenitiesWithIcons={amenitiesWithIcons}
-          isOpen={showModal}
-          onClose={() => setShowModal(false)}
-        />
+        <Suspense fallback={<div>Loading Modal...</div>}>
+          <LazyRoomModal
+            room={selectedRoom}
+            amenitiesWithIcons={amenitiesWithIcons}
+            isOpen={showModal}
+            onClose={() => setShowModal(false)}
+          />
+        </Suspense>
       )}
     </div>
   );
