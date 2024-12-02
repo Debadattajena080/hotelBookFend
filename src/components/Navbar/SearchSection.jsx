@@ -43,6 +43,10 @@ const SearchSection = () => {
     setRooms([...rooms, { id: rooms.length + 1, guests: 1 }]);
   };
 
+  const handleRemoveRoom = (id) => {
+    setRooms(rooms.filter((room) => room.id !== id));
+  };
+
   const handleGuestChange = (roomId, action) => {
     setRooms(
       rooms.map((room) =>
@@ -218,12 +222,26 @@ const SearchSection = () => {
                     </div>
                   </div>
                 ))}
-                <button
-                  onClick={handleAddRoom}
-                  className="w-full text-right text-gray-700 hover:text-gray-900 pt-1 border-t-2 mt-3"
-                >
-                  Add Room
-                </button>
+                <div className="flex items-center justify-between border-t-2 mt-6 ">
+                  <button
+                    onClick={handleAddRoom}
+                    className=" text-gray-700 hover:text-gray-900 mt-2"
+                  >
+                    Add Room
+                  </button>
+
+                  <button
+                    className={`mt-2 ${
+                      rooms.length === 1
+                        ? "text-gray-200 cursor-not-allowed"
+                        : "text-gray-700"
+                    }`}
+                    onClick={() => handleRemoveRoom(rooms[rooms.length - 1].id)} // Pass the id of the last room
+                    disabled={rooms.length === 1}
+                  >
+                    Remove room
+                  </button>
+                </div>
               </div>
             )}
           </div>
