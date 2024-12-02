@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { AuthContext } from "../../context/AuthContext";
 
 const AddRoom = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +17,7 @@ const AddRoom = () => {
 
   const navigate = useNavigate();
   const { id } = useParams();
+  const { userId } = useContext(AuthContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -59,7 +61,7 @@ const AddRoom = () => {
 
     axios
       .post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/hotels/${id}/add-rooms`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/user/${userId}/hotel/${id}/add-rooms`,
         RoomData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -79,12 +81,12 @@ const AddRoom = () => {
     <>
       <div className="w-full">
         <form
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          className="shadow-md rounded px-8 pt-6 pb-8 mb-4"
           method="POST"
           encType="multipart/form-data"
           onSubmit={handleSubmit}
         >
-          <section className="bg-white">
+          <section>
             <div className="py-8 px-2 mx-auto max-w-2xl lg:py-12">
               <h2 className="mb-4 text-xl font-bold">Add a new room</h2>
 

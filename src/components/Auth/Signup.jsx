@@ -26,14 +26,15 @@ const Signup = () => {
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/api/user/signup`, signupData)
       .then((response) => {
-        toast.success(response.data.message);
-        const token = response.data.token;
+        toast.success(response?.data?.message);
+        const token = response?.data?.token;
+        console.log("token", token);
         localStorage.setItem("token", token);
         setJwtToken(token);
         navigate("/");
       })
       .catch((error) => {
-        toast.error(error.response.data.message);
+        toast.error(error?.response?.data?.message);
       });
   };
   return (

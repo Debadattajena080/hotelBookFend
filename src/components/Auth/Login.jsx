@@ -25,17 +25,17 @@ const Login = () => {
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/api/user/login`, loginData)
       .then((response) => {
-        const token = response.data.token;
+        const token = response?.data?.token;
 
         // Save the token to localStorage
         localStorage.setItem("token", token);
         setJwtToken(token);
 
-        toast.success(response.data.message);
+        toast.success(response?.data?.message);
         navigate("/");
       })
       .catch((error) => {
-        toast.error(error.response.data.message);
+        toast.error(error?.response?.data?.message);
         console.log(error);
       });
   };

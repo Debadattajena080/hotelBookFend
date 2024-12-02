@@ -91,7 +91,14 @@ const HotelDetails = () => {
         </h2>
         <RoomDetails rooms={roomData} />
         {userRole === "admin" && (
-          <button onClick={() => addRoom()}>Add Room</button>
+          <div className="flex justify-end">
+            <button
+              className="mt-4 mr-8 py-2 px-4 border-2 rounded bg-gray-600 text-white hover:bg-gray-700"
+              onClick={() => addRoom()}
+            >
+              Add Room
+            </button>
+          </div>
         )}
       </div>
 
@@ -111,9 +118,6 @@ const HotelDetails = () => {
           </div>
         </div>
 
-        {/* <!-- Check-in and Check-out times --> */}
-
-        {/* <!-- Policies List --> */}
         <div>
           <ul className="space-y-3 text-md">
             <li className="flex items-center">
@@ -147,7 +151,9 @@ const HotelDetails = () => {
       </div>
       <div className="mt-6 flex justify-between p-6 bg-white shadow-lg rounded-lg mb-4 ">
         <div>
-        <h2 className="text-2xl font-bold text-gray-800 pb-4 border-b-2 space-x-16">Contact details</h2>
+          <h2 className="text-2xl font-bold text-gray-800 pb-4 border-b-2 space-x-16">
+            Contact details
+          </h2>
         </div>
         <MyMapComponent address={hotel?.address} />
       </div>

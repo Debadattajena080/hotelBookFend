@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Store authentication state
   const [phone, setPhone] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [loading, isLoading] = useState(true);
 
   const [jwtToken, setJwtToken] = useState(localStorage.getItem("token"));
 
@@ -21,6 +22,7 @@ export const AuthProvider = ({ children }) => {
         setPhone(decoded.phone);
         setUserId(decoded.id);
         setIsAuthenticated(true);
+        console.log("if block");
       } catch (error) {
         console.error("Invalid token:", error);
         setIsAuthenticated(false);
@@ -28,12 +30,8 @@ export const AuthProvider = ({ children }) => {
         setUserRole(null);
         setPhone(null);
       }
-    } else {
-      setIsAuthenticated(false);
-      setUserEmail(null);
-      setUserRole(null);
-      setPhone(null);
     }
+    isLoading(false);
   }, [jwtToken]); // Run once on mount
 
   return (
@@ -44,6 +42,7 @@ export const AuthProvider = ({ children }) => {
         isAuthenticated,
         phone,
         userId,
+        loading,
         setJwtToken,
         setUserEmail,
         setUserRole,

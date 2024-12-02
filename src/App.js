@@ -24,7 +24,6 @@ import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 
 function App() {
-
   const { userRole } = useContext(AuthContext);
 
   return (
@@ -74,7 +73,14 @@ function App() {
           />
           <Route path="/search_results" element={<SearchResults />} />
 
-          <Route path="/all-bookings" element={<BookingIndex />} />
+          <Route
+            path="/all-bookings"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <BookingIndex />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>

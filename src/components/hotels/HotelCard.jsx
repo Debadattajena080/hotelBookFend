@@ -58,7 +58,7 @@ const HotelCard = ({ hotel, handleDetails }) => {
           </>
         )}
         <button
-          className="text-slate-600 font-bold text-lg hover:text-slate-800 md:mt-52"
+          className=" text-slate-600 font-bold text-lg hover:text-slate-800 md:mt-52"
           onClick={() => handleDetails(hotel?._id)}
         >
           View Details

@@ -3,17 +3,18 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import HotelCard from "../hotels/HotelCard";
 import { toast } from "react-toastify";
+import LoadingPage from "../../utility/LoadingPage";
 
 const SearchResults = () => {
   const [searchParams] = useSearchParams();
   const [hotels, setHotels] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isloading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchHotels = async () => {
-      setLoading(true);
+      setIsLoading(true);
       const destination = searchParams.get("destination");
       const checkIn = searchParams.get("checkIn");
       const checkOut = searchParams.get("checkOut");
@@ -37,14 +38,18 @@ const SearchResults = () => {
       } catch (err) {
         toast.error(err);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
     fetchHotels();
   }, [searchParams]);
 
-  if (loading) {
-    return <div>Loading...</div>;
+  if (isloading) {
+    return (
+      <div>
+        <LoadingPage />
+      </div>
+    );
   }
 
   const handleDetails = (id) => {

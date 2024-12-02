@@ -1,16 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { AuthContext } from "../../context/AuthContext";
+import LoadingPage from "../../utility/LoadingPage";
 
 const BookingIndex = () => {
   const [bookingList, setBookingList] = useState([]);
   const [statusChanged, setStatusChange] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [modalData, setModalData] = useState(null); // For modal data
+  const [isModalOpen, setIsModalOpen] = useState(false); // For modal visibility
+
+  const { userId } = useContext(AuthContext);
+
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/all-bookings`)
-      .then((response) => setBookingList(response.data))
-      .catch((error) => console.log(error));
-  }, [statusChanged]);
+      .get(
+        `${process.env.REACT_APP_BACKEND_URL}/api/user/${userId}/all-bookings`
+      )
+      .then((response) => {
+        setBookingList(response?.data);
+        setIsLoading(false);
+      })
+      .catch((error) => console.error(error));
+  }, [userId, statusChanged]);
 
   const handleStatusChange = (bookingId, newStatus) => {
     axios
@@ -33,7 +46,30 @@ const BookingIndex = () => {
       .catch((error) => toast.error(error));
   };
 
+  const handleHotelClick = async (hotelId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/api/hotels/${hotelId}/rooms`
+      );
+      setModalData(response.data);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error("Error fetching hotel details:", error);
+    }
+  };
+
+  console.log("Modal Data", modalData);
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalData(null);
+  };
+
   console.log("Booking list", bookingList);
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
 
   return (
     <div className="container mx-auto p-4">
@@ -67,7 +103,12 @@ const BookingIndex = () => {
                   <td className="px-4 py-2 border">{booking.contactEmail}</td>
                   <td className="px-4 py-2 border">{booking.contactPhone}</td>
                   <td className="px-4 py-2 border">
-                    {booking.hotelId?.hotelname || "N/A"}
+                    <button
+                      className="text-blue-500 underline"
+                      onClick={() => handleHotelClick(booking.hotelId?._id)}
+                    >
+                      {booking.hotelId?.hotelname || "N/A"}
+                    </button>
                   </td>
                   <td className="px-4 py-2 border">
                     {booking.roomId?.roomType || "N/A"}
@@ -80,7 +121,6 @@ const BookingIndex = () => {
                   </td>
                   <td className="px-4 py-2 border">{booking.guests}</td>
                   <td className="px-4 py-2 border">{booking.rooms}</td>
-
                   <td
                     className={`px-4 py-2 border ${
                       booking.status ? "text-green-500" : "text-red-500"
@@ -88,7 +128,7 @@ const BookingIndex = () => {
                   >
                     {booking.status ? "Confirmed" : "Pending"}
                   </td>
-                  <td className="px-4 py-2 border flex items-center justify-between">
+                  <td className="px-4 py-2 flex items-center justify-between">
                     {!booking.status && (
                       <button
                         onClick={() => handleStatusChange(booking._id, true)}
@@ -116,6 +156,39 @@ const BookingIndex = () => {
           </tbody>
         </table>
       </div>
+
+      {isModalOpen && modalData && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-1/2">
+            <h2 className="text-xl font-bold mb-4">Booking Details</h2>
+            {Array.isArray(modalData) && modalData.length > 0 ? (
+              modalData?.map((room, index) => (
+                <div key={index} className="mb-4">
+                  <h3 className="text-lg font-bold mb-2">
+                    {room?.roomType || "N/A"}
+                  </h3>
+                  <p>Total Rooms: {room?.totalRoom || "N/A"}</p>
+                  <p>Booked Rooms: {room?.bookedRooms || "N/A"}</p>
+                  <p>
+                    Available Rooms:{" "}
+                    {room?.totalRooms - room?.bookedRooms >= 0
+                      ? room?.totalRooms - room?.bookedRooms
+                      : "N/A"}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-500">No room details available.</p>
+            )}
+            <button
+              onClick={closeModal}
+              className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
